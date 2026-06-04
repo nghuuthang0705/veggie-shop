@@ -10,6 +10,6 @@ class Role extends Model
 
     public function permissions()
     {
-        return $this->belongsToMany(Permission::class, 'role_permission'); // relationship: n-n thông qua bảng trung gian "role_permision"
+        return $this->belongsToMany(Permission::class, 'role_permissions'); // relationship: n-n thông qua bảng trung gian "role_permision"
     }
 }
