@@ -19,6 +19,8 @@
     <link rel="stylesheet" href="{{ asset('assets/clients/css/style.css')}}">
     <!-- Responsive css -->
     <link rel="stylesheet" href="{{ asset('assets/clients/css/responsive.css')}}">
+    <!-- Import CSS for Toastr -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 </head>
 
 <body>
@@ -42,10 +44,16 @@
     </div>
     <!-- preloader area end -->
 
+    <!-- Jquery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- All JS Plugins -->
     <script src="{{ asset('assets/clients/js/plugins.js')}}"></script>
     <!-- Main JS -->
     <script src="{{ asset('assets/clients/js/main.js')}}"></script>
+    <!-- jquery-toast -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <!-- JavaScript -->
+    <script src="{{ asset('assets/clients/js/custom.js') }}"></script>
 
 </body>
 
