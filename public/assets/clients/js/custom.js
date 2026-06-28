@@ -1,7 +1,7 @@
 $(document).ready(function () {
-    /*******************************
-     ***** PAGE LOGIN, REGISTER *****
-     *******************************/
+    /******************************
+     **** PAGE LOGIN, REGISTER ****
+     ******************************/
 
     // Validate Register Form
     $("#register-form").submit(function (e) {
@@ -34,6 +34,28 @@ $(document).ready(function () {
         if (!checkbox1 || !checkbox2) {
             errorMessage +=
                 "Bạn phải đồng ý với các điều khoản trước khi tạo tài khoản. <br>";
+        }
+
+        if (errorMessage != "") {
+            toastr.error(errorMessage, "Lỗi");
+            e.preventDefault();
+        }
+    });
+
+    // Validate Login Form
+    $("#login-form").submit(function (e) {
+        toastr.clear();
+        let email = $('input[name="email"]').val();
+        let password = $('input[name="password"]').val();
+        let errorMessage = "";
+
+        let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            errorMessage += "Email không hợp lệ. <br>";
+        }
+
+        if (password.length < 6) {
+            errorMessage += "Mật khẩu phải có ít nhất 6 ký tự. <br>";
         }
 
         if (errorMessage != "") {
