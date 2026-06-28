@@ -39,7 +39,7 @@
                             </div>
 
                             <div class="go-to-btn mt-20">
-                                <a href="#"><small>QUÊN MẬT KHẨU?</small></a>
+                                <a href="{{ route('password.request') }}"><small>QUÊN MẬT KHẨU?</small></a>
                             </div>
                         </form>
                     </div>
