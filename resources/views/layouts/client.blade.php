@@ -10,17 +10,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Place favicon.png in the root directory -->
-    <link rel="shortcut icon" href="{{ asset('assets/clients/img/favicon.png')}}" type="image/x-icon" />
+    <link rel="shortcut icon" href="{{ asset('assets/clients/img/favicon.png') }}" type="image/x-icon" />
     <!-- Font Icons css -->
-    <link rel="stylesheet" href="{{ asset('assets/clients/css/font-icons.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/clients/css/font-icons.css') }}">
     <!-- plugins css -->
-    <link rel="stylesheet" href="{{ asset('assets/clients/css/plugins.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/clients/css/plugins.css') }}">
     <!-- Main Stylesheet -->
-    <link rel="stylesheet" href="{{ asset('assets/clients/css/style.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/clients/css/style.css') }}">
     <!-- Responsive css -->
-    <link rel="stylesheet" href="{{ asset('assets/clients/css/responsive.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/clients/css/responsive.css') }}">
+
     <!-- Import CSS for Toastr -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+
+    {{-- Import Custom CSS --}}
+    <link rel="stylesheet" href="{{ asset('assets/clients/css/custom.css') }}">
 </head>
 
 <body>
@@ -29,7 +33,7 @@
         @include('clients.partials.header')
 
         @hasSection('breadcrumb')
-        @include('clients.partials.breadcrumb')
+            @include('clients.partials.breadcrumb')
         @endif
 
         <main>
@@ -55,9 +59,9 @@
     <!-- Jquery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- All JS Plugins -->
-    <script src="{{ asset('assets/clients/js/plugins.js')}}"></script>
+    <script src="{{ asset('assets/clients/js/plugins.js') }}"></script>
     <!-- Main JS -->
-    <script src="{{ asset('assets/clients/js/main.js')}}"></script>
+    <script src="{{ asset('assets/clients/js/main.js') }}"></script>
     <!-- jquery-toast -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <!-- JavaScript -->
