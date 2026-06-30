@@ -164,4 +164,76 @@ $(document).ready(function () {
             },
         });
     });
+
+    // Change Password Form
+    $("#change-password-form").submit(function (e) {
+        e.preventDefault();
+        let current_password = $('input[name="current_password"]').val().trim();
+        let new_password = $('input[name="new_password"]').val().trim();
+        let confirm_new_password = $('input[name="confirm_new_password"]')
+            .val()
+            .trim();
+
+        let errorMessage = "";
+
+        if (current_password.length < 6) {
+            errorMessage += "Mật khẩu cũ phải có ít nhất 6 ký tự. <br>";
+        }
+
+        if (new_password.length < 6) {
+            errorMessage += "Mật khẩu mới phải có ít nhất 6 ký tự. <br>";
+        }
+
+        if (new_password != confirm_new_password) {
+            errorMessage += "Mật khẩu nhập lại không khớp. <br>";
+        }
+
+        if (errorMessage != "") {
+            toastr.error(errorMessage, "Lỗi");
+            return;
+        }
+
+        let formData = $(this).serialize();
+        let urlUpdate = $(this).attr("action");
+
+        $.ajaxSetup({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+        });
+
+        $.ajax({
+            url: urlUpdate,
+            type: "POST",
+            data: formData,
+
+            beforeSend: function () {
+                $(".btn-wrapper button")
+                    .text("Đang cập nhật...")
+                    .attr("disabled", true);
+            },
+
+            success: function (response) {
+                if (response.success) {
+                    toastr.success(response.message);
+                    $("#change-password-form")[0].reset();
+                } else {
+                    toastr.error(response.message);
+                }
+            },
+
+            error: function (xhr) {
+                let errors = xhr.responseJSON.errors;
+                $.each(errors, function (key, value) {
+                    toastr.error(value[0]);
+                });
+            },
+
+            complete: function () {
+                $(".btn-wrapper button")
+                    .text("Cập nhật")
+                    .attr("disabled", false);
+            },
+        });
+    });
 });

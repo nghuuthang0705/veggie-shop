@@ -148,7 +148,7 @@
                                         <div class="tab-pane fade" id="liton_tab_password">
                                             <div class="ltn__myaccount-tab-content-inner">
                                                 <div class="ltn__form-box">
-                                                    <form action="#" method="POST" id="change-password-form">
+                                                    <form action="{{ route('account.change-password') }}" method="POST" id="change-password-form">
                                                         <fieldset>
                                                             <div class="row">
                                                                 <div class="col-md-12">
