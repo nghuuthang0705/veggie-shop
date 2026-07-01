@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Clients;
 
 use App\Http\Controllers\Controller;
+use App\Models\ShippingAddress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -13,7 +14,9 @@ class AccountController extends Controller
     public function index()
     {
         $user = Auth::user();
-        return view('clients.pages.account', compact('user'));
+        $addresses = ShippingAddress::where('user_id', Auth::id())->get();
+
+        return view('clients.pages.account', compact('user', 'addresses'));
     }
 
     // Update User Information
@@ -88,5 +91,55 @@ class AccountController extends Controller
             'success' => true,
             'message' => 'Đổi mật khẩu thành công!',
         ]);
+    }
+
+    public function addAddress(Request $request)
+    {
+        $request->validate([
+            'full_name' => 'required|string|max:255',
+            'phone' => 'required|string|max:20',
+            'address' => 'required|string|max:255',
+            'city' => 'required|string|max:100',
+        ]);
+
+        // if the new address is set as default, update the other address default = 0
+        if($request->has('default'))
+        {
+            ShippingAddress::where('user_id', Auth::id())->update(['default' => 0]);
+        }
+
+        ShippingAddress::create([
+            'user_id' => Auth::id(),
+            'full_name' => $request->full_name,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'city' => $request->city,
+            'default' => $request->has('default') ? 1 : 0
+        ]);
+
+        return back()->with('success', 'Địa chỉ đã được thêm!');
+    }
+
+    public function updatePrimaryAddress($id)
+    {
+        // Find address
+        $address = ShippingAddress::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
+
+        // Set all address this user default = 0
+        ShippingAddress::where('user_id', Auth::id())->update(['default' => 0]);
+
+        // Update address selected => default = 1
+        $address->update(['default' => 1]);
+
+        toastr()->success('Địa chỉ mặc định đã được cập nhật!');
+        return back();
+    }
+
+    public function deleteAddress($id)
+    {
+        ShippingAddress::where('id', $id)->where('user_id', Auth::id())->delete();
+
+        toastr()->success('Địa chỉ đã được xóa!');
+        return back();
     }
 }

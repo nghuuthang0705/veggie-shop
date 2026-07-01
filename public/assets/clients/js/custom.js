@@ -236,4 +236,36 @@ $(document).ready(function () {
             },
         });
     });
+
+    // Validate Address Form
+    $("#addAdressForm").submit(function (e) {
+        e.preventDefault();
+
+        let isValid = true;
+
+        // Delete old error notification
+        $(".error-message").remove();
+
+        let fullName = $("#full_name").val().trim();
+        let phone = $("#phone").val().trim();
+
+        if (fullName.length < 3) {
+            isValid = false;
+            $("#full_name").after(
+                '<p class = "error-message text-danger"> Tên người dùng phải có ít nhất 3 ký tự. </p>',
+            );
+        }
+
+        let phoneRegex = /^[0-9]{10,11}$/;
+        if (!phoneRegex.test(phone)) {
+            isValid = false;
+            $("#phone").after(
+                '<p class = "error-message text-danger"> Số điện thoại không hợp lệ. </p>',
+            );
+        }
+
+        if (isValid) {
+            this.submit();
+        }
+    });
 });
