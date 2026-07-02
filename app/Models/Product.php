@@ -24,4 +24,9 @@ class Product extends Model
     {
         return $this->hasMany(CartItem::class);
     }
+
+    public function firstImage()
+    {
+        return $this->hasOne(ProductImage::class)->orderBy('id', 'ASC');
+    }
 }
