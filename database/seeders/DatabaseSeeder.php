@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+// use App\Models\Product;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -27,7 +28,10 @@ class DatabaseSeeder extends Seeder
             PermissionsTableSeeder::class,
             RolePermissionTableSeeder::class,
             UsersTableSeeder::class,
-            AdminStaffTableSeeder::class
+            AdminStaffTableSeeder::class,
+            CategorySeeder::class,
         ]);
+
+        // Product::factory()->count(50)->create();
     }
 }

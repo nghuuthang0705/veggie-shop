@@ -20,7 +20,7 @@ return new class extends Migration
             $table->decimal('price', 10, 2);
             $table->integer('stock')->default(0);
             $table->string('status')->default('in_stock');
-            $table->string('unit')->unique(); // umit: kg, bo, tui,...
+            $table->string('unit')->nullable(); // unit: kg, bo, tui,...
             $table->timestamps();
         });
     }

@@ -7,12 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Order extends Model
 {
-    protected $fillable = [
-        'user_id',
-        'total_price',
-        'status',
-        'shipping_address_id'
-    ];
+    protected $fillable = ['user_id', 'total_price', 'status', 'shipping_address_id'];
 
     public function oderItems()
     {
