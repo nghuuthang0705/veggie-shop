@@ -32,6 +32,9 @@
                         </ul>
                     </div>
                     <div class="tab-content">
+                        <div id="loading-spinner">
+                            <div class="loader"></div>
+                        </div>
                         <div class="tab-pane fade active show" id="liton_product_grid">
                             @include('clients.components.products_grid', ['products' => $products])
                         </div>
@@ -70,8 +73,8 @@
                             <h4 class="ltn__widget-title ltn__widget-title-border">Lọc theo giá</h4>
                             <div class="price_filter">
                                 <div class="price_slider_amount">
-                                    <input type="submit" value="Your range:" />
-                                    <input type="text" class="amount" name="price" placeholder="Add Your Price" />
+                                    <input type="submit" value="Giá:" />
+                                    <input type="text" class="amount" name="price" placeholder="Thêm giá của bạn" />
                                 </div>
                                 <div class="slider-range"></div>
                             </div>
