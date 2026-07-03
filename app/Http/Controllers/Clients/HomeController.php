@@ -16,8 +16,7 @@ class HomeController extends Controller
         {
             foreach($category->products as $product)
             {
-                $product->image_url = $product->firstImage ?-> image ? asset('storage/uploads/products/' . $product->firstImage->image) 
-                : asset('storage/uploads/products/default-product.png');
+                $product->image_url = $product->firstImage ?-> image ? asset('storage/uploads/products/' . $product->firstImage->image) : asset('storage/uploads/products/default-product.png');
             }
         }
         
