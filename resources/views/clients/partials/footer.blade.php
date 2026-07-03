@@ -7,11 +7,11 @@
                     <div class="footer-widget footer-about-widget">
                         <div class="footer-logo">
                             <div class="site-logo">
-                                <img src="img/logo.png" alt="Logo">
+                                <img src="{{ asset('assets/clients/img/logo.png') }}" alt="Logo">
                             </div>
                         </div>
-                        <p>Lorem Ipsum is simply dummy text of the and typesetting industry. Lorem Ipsum is
-                            dummy text of the printing.</p>
+                        <p> Cam kết mang đến sản phẩm an toàn, chất lượng cùng dịch vụ giao hàng nhanh, giúp bữa ăn của gia đình bạn luôn tươi ngon mỗi ngày.
+                        </p>
                         <div class="footer-address">
                             <ul>
                                 <li>
@@ -19,7 +19,7 @@
                                         <i class="icon-placeholder"></i>
                                     </div>
                                     <div class="footer-address-info">
-                                        <p>Ngu Hanh Son, Da Nang, Viet Nam</p>
+                                        <p>Ho Chi Minh City, Viet Nam</p>
                                     </div>
                                 </li>
                                 <li>
@@ -27,7 +27,7 @@
                                         <i class="icon-call"></i>
                                     </div>
                                     <div class="footer-address-info">
-                                        <p><a href="tel:+0123-456789">+0123-456789</a></p>
+                                        <p><a href="tel:+0123-456789">0123-456-789</a></p>
                                     </div>
                                 </li>
                                 <li>
@@ -35,7 +35,7 @@
                                         <i class="icon-mail"></i>
                                     </div>
                                     <div class="footer-address-info">
-                                        <p><a href="mailto:minhdien.dev@gmail.com">minhdien.dev@gmail.com</a>
+                                        <p><a href="mailto:nghuuthang0705@gmail.com">nghuuthang0705@gmail.com</a>
                                         </p>
                                     </div>
                                 </li>
@@ -103,13 +103,12 @@
                             <form action="#">
                                 <input type="email" name="email" placeholder="Email*">
                                 <div class="btn-wrapper">
-                                    <button class="theme-btn-1 btn" type="submit"><i
-                                            class="fas fa-location-arrow"></i></button>
+                                    <button class="theme-btn-1 btn" type="submit"><i class="fas fa-location-arrow"></i></button>
                                 </div>
                             </form>
                         </div>
                         <h5 class="mt-30">Chúng tôi chấp nhận</h5>
-                        <img src="img/icons/payment-4.png" alt="Payment Image">
+                        <img src="{{ asset('assets/clients/img/icons/payment-4.png') }}" alt="Payment Image">
                     </div>
                 </div>
             </div>

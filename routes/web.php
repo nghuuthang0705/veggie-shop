@@ -16,15 +16,15 @@ Route::get('/about', function () {
 
 Route::get('/service', function () {
     return view('clients.pages.service');
-});
+})->name('service');
 
 Route::get('/team', function () {
     return view('clients.pages.team');
-});
+})->name('team');
 
 Route::get('/faq', function () {
     return view('clients.pages.faq');
-});
+})->name('faq');
 
 // Guest
 Route::middleware('guest')->group(function() {

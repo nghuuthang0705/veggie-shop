@@ -20,12 +20,10 @@
             <div class="row">
                 <div class="col-lg-6 offset-lg-3">
                     <div class="account-login-inner">
-                        <form action="{{ route('post-register') }}" class="ltn__form-box contact-form-box" method="POST"
-                            id="register-form">
+                        <form action="{{ route('post-register') }}" class="ltn__form-box contact-form-box" method="POST" id="register-form">
                             @csrf
 
-                            <input type="text" name="name" placeholder="Họ và tên" value="{{ old('name') }}"
-                                required>
+                            <input type="text" name="name" placeholder="Họ và tên" value="{{ old('name') }}" required>
                             @error('name')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
@@ -73,7 +71,7 @@
                             <p>Khi tạo tài khoản, bạn đồng ý với:</p>
                             <p><a href="#">ĐIỀU KHOẢN SỬ DỤNG &nbsp; &nbsp; | &nbsp; &nbsp; CHÍNH SÁCH BẢO MẬT</a></p>
                             <div class="go-to-btn mt-50">
-                                <a href="{{ route('login') }}">ĐÃ CÓ TÀI KHOẢN? ĐĂNG NHẬP NGAY</a>
+                                <a href="{{ route('login') }}">ĐÃ CÓ TÀI KHOẢN? <strong>ĐĂNG NHẬP NGAY</strong></a>
                             </div>
                         </div>
                     </div>
