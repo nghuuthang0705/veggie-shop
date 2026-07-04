@@ -206,6 +206,7 @@ $(document).ready(function () {
             url: urlUpdate,
             type: "POST",
             data: formData,
+
             beforeSend: function () {
                 $(".btn-wrapper button")
                     .text("Đang cập nhật...")
@@ -272,6 +273,17 @@ $(document).ready(function () {
      ******** PAGE PRODUCTS ********
      *******************************/
 
+    let currentPage = 1;
+
+    $(document).on("click", ".pagination-link", function (e) {
+        e.preventDefault();
+        let pageUrl = $(this).attr("href");
+        let page = pageUrl.split("page=")[1];
+        currentPage = page;
+        fetchProducts();
+    });
+
+    // Product load function (combining filter + pagination)
     function fetchProducts() {
         let category_id = $(".category-filter.active").data("id") || "";
         let minPrice = $(".slider-range").slider("values", 0);
@@ -285,7 +297,7 @@ $(document).ready(function () {
         });
 
         $.ajax({
-            url: "products/filter",
+            url: "products/filter?page=" + currentPage,
             type: "GET",
             data: {
                 category_id: category_id,
@@ -293,6 +305,7 @@ $(document).ready(function () {
                 max_price: maxPrice,
                 sort_by: sort_by,
             },
+
             beforeSend: function () {
                 $("#loading-spinner").show();
                 $("#liton_product_grid").hide();
@@ -300,6 +313,7 @@ $(document).ready(function () {
 
             success: function (response) {
                 $("#liton_product_grid").html(response.products);
+                $(".ltn__pagination").html(response.pagination);
             },
 
             complete: function () {
@@ -316,10 +330,12 @@ $(document).ready(function () {
     $(".category-filter").click(function () {
         $(".category-filter").removeClass("active");
         $(this).addClass("active");
+        currentPage = 1;
         fetchProducts();
     });
 
     $("#sort-by").change(function () {
+        currentPage = 1;
         fetchProducts();
     });
 
@@ -332,6 +348,7 @@ $(document).ready(function () {
             $(".amount").val(ui.values[0] + " - " + ui.values[1] + " VNĐ");
         },
         change: function (event, ui) {
+            currentPage = 1;
             fetchProducts();
         },
     });
