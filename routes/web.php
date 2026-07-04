@@ -66,3 +66,6 @@ Route::middleware(['auth.custom'])->group(function() {
 
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 Route::get('/products/filter', [ProductController::class, 'filter'])->name('products.filter');
+
+// Detail Product
+Route::get('/product/{slug}', [ProductController::class, 'detail'])->name('product.detail');

@@ -72,4 +72,14 @@ class ProductController extends Controller
             'pagination' => $products->links('clients.components.pagination.pagination_custom')->render()
         ]);
     }
+
+    public function detail($slug)
+    {
+        $product = Product::with(['category', 'images'])->where('slug', $slug)->firstOrFail();
+
+        // Get product in the same category
+        $relatedProducts = Product::where('category_id', $product->category_id)->where('id', '!=', $product->id)->limit(6)->get();
+        
+        return view('clients.pages.product-detail', compact('product', 'relatedProducts'));
+    }
 }
