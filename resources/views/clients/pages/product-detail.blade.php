@@ -63,7 +63,7 @@
                                                 </div>
                                             </li>
                                             <li>
-                                                <a href="#" class="theme-btn-1 btn btn-effect-1" title="THÊM VÀO GIỎ HÀNG" data-bs-toggle="modal"
+                                                <a href="javascript:void(0)" class="theme-btn-1 btn btn-effect-1" title="Add to Cart" data-bs-toggle="modal"
                                                     data-bs-target="#add_to_cart_modal">
                                                     <i class="fas fa-shopping-cart"></i>
                                                     <span>THÊM VÀO GIỎ HÀNG</span>
@@ -74,7 +74,7 @@
                                     <div class="ltn__product-details-menu-3">
                                         <ul>
                                             <li>
-                                                <a href="#" class="" title="Yêu thích" data-bs-toggle="modal" data-bs-target="#liton_wishlist_modal">
+                                                <a href="#" class="" title="Wishlist" data-bs-toggle="modal" data-bs-target="#liton_wishlist_modal">
                                                     <i class="far fa-heart"></i>
                                                     <span>Yêu thích</span>
                                                 </a>
@@ -271,6 +271,9 @@
                     </div>
                 @endforeach
             </div>
+            @foreach ($relatedProducts as $product)
+                @include('clients.components.includes.include-modals')
+            @endforeach
         </div>
     </div>
     <!-- PRODUCT SLIDER AREA END -->

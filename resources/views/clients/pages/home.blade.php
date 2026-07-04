@@ -204,6 +204,9 @@
                                             </div>
                                         @endforeach
                                     </div>
+                                    @foreach ($category->products as $product)
+                                        @include('clients.components.includes.include-modals')
+                                    @endforeach
                                 </div>
                             </div>
                         @endforeach
