@@ -73,3 +73,5 @@ Route::get('/product/{slug}', [ProductController::class, 'detail'])->name('produ
 
 // Handle Cart
 Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+
+Route::get('/mini-cart', [CartController::class, 'loadMiniCart'])->name('cart.mini');

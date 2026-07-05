@@ -419,4 +419,31 @@ $(document).ready(function () {
             },
         });
     });
+
+    /******************************
+     ********* PAGE CARTS *********
+     ******************************/
+
+    // Mini Cart
+    $(".mini-cart-icon").on("click", function (e) {
+        $.ajax({
+            url: "/mini-cart",
+            type: "GET",
+            success: function (response) {
+                if (response.status) {
+                    $("#ltn__utilize-cart-menu .ltn__utilize-menu-inner").html(
+                        response.html,
+                    );
+                    $("#ltn__utilize-cart-menu").addClass("ltn__utilize-open");
+                } else {
+                    toastr.error("Không thể tải giỏ hàng!");
+                }
+            },
+        });
+    });
+
+    $(document).on("click", ".ltn__utilize-close", function () {
+        $("#ltn__utilize-cart-menu").removeClass("ltn__utilize-open");
+        $(".ltn__utilize-overlay").hide();
+    });
 });

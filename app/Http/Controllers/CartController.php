@@ -72,4 +72,20 @@ class CartController extends Controller
             'cart_count' => $cartCount
         ]);
     }
+
+    public function loadMiniCart()
+    {
+        $cartItems = [];
+
+        if(auth()->check())
+        {
+            $cartItems = CartItem::with('product')->where('user_id', auth()->id())->get();
+        } else {
+            $cartItems = session('cart', []);
+        }
+        return response()->json([
+            'status' => true,
+            'html' => view('clients.components.includes.mini_cart', compact('cartItems'))->render()
+        ]);
+    }
 }
