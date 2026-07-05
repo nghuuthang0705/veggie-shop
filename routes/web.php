@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\Clients\AccountController;
 use App\Http\Controllers\Clients\AuthController;
 use App\Http\Controllers\Clients\ForgotPasswordController;
@@ -69,3 +70,6 @@ Route::get('/products/filter', [ProductController::class, 'filter'])->name('prod
 
 // Detail Product
 Route::get('/product/{slug}', [ProductController::class, 'detail'])->name('product.detail');
+
+// Handle Cart
+Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');

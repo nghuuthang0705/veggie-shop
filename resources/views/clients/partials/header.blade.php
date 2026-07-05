@@ -115,7 +115,13 @@
                     <div class="mini-cart-icon">
                         <a href="#ltn__utilize-cart-menu" class="ltn__utilize-toggle">
                             <i class="icon-shopping-cart"></i>
-                            <sup>2</sup>
+                            <sup id="cart_count">
+                                @auth
+                                    {{ \App\Models\CartItem::where('user_id', auth()->id())->sum('quantity') }}
+                                @else
+                                    {{ session('cart') ? array_sum(array_column(session('cart'), 'quantity')) : 0 }}
+                                @endauth
+                            </sup>
                         </a>
                     </div>
                     <!-- mini-cart -->

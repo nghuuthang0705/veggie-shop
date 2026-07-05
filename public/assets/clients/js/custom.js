@@ -352,10 +352,71 @@ $(document).ready(function () {
             fetchProducts();
         },
     });
+
     $(".amount").val(
         $(".slider-range").slider("values", 0) +
             " - " +
             $(".slider-range").slider("values", 1) +
             " VNĐ",
     );
+
+    /******************************
+     **** PAGE DETAIL PRODUCTS ****
+     ******************************/
+
+    $(document).on("click", ".qtybutton", function () {
+        var $button = $(this);
+        var $input = $button.siblings("input");
+        var oldValue = parseInt($input.val());
+        var maxStock = parseInt($input.data("max"));
+
+        if ($button.hasClass("inc")) {
+            if (oldValue < maxStock) {
+                $input.val(oldValue + 1);
+            }
+        } else {
+            if (oldValue > 1) {
+                $input.val(oldValue - 1);
+            }
+        }
+    });
+
+    // Add to Cart
+    $(document).on("click", ".add-to-cart-btn", function (e) {
+        e.preventDefault();
+
+        let productId = $(this).data("id");
+        let quantity = $(this)
+            .closest("li")
+            .prev()
+            .find(".cart-plus-minus-box")
+            .val();
+
+        quantity = quantity ? quantity : 1;
+
+        $.ajaxSetup({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+        });
+
+        $.ajax({
+            url: "/cart/add",
+            type: "POST",
+            data: {
+                product_id: productId,
+                quantity: quantity,
+            },
+
+            success: function (response) {
+                $("#add_to_cart_modal-" + productId).modal("show");
+                $("#quick_view_modal-" + productId).modal("hide");
+                $("#cart_count").text(response.cart_count);
+            },
+
+            error: function (xhr) {
+                alert("Có lỗi xảy ra với ajax addToCart In Detail!");
+            },
+        });
+    });
 });
