@@ -46,3 +46,11 @@
         transform: rotate(360deg);
     }
 }
+
+/* Checkout */
+.select-address {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0px;
+}
