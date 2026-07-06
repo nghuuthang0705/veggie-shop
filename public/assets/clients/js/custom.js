@@ -495,6 +495,7 @@ $(document).ready(function () {
      ********* PAGE CARTS *********
      ******************************/
 
+    // Handle update quantity product in Page Cart
     function updateCart(productId, quantity, $input) {
         $.ajaxSetup({
             headers: {
@@ -525,4 +526,39 @@ $(document).ready(function () {
             },
         });
     }
+
+    // Handle remove product in Page Cart
+    $(".remove-from-cart").on("click", function (e) {
+        let productId = $(this).data("id");
+        let row = $(this).closest("tr");
+
+        $.ajaxSetup({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+        });
+
+        $.ajax({
+            url: "/cart/remove-cart",
+            type: "POST",
+            data: {
+                product_id: productId,
+            },
+
+            success: function (response) {
+                row.remove();
+
+                $(".cart-total").text(response.total);
+                $(".cart-grand-total").text(response.grandTotal);
+
+                if ($(".cart-product-remove").length === 0) {
+                    location.reload();
+                }
+            },
+
+            error: function (xhr) {
+                alert(xhr.responseJSON.error);
+            },
+        });
+    });
 });

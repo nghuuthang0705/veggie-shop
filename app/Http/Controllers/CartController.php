@@ -135,6 +135,7 @@ class CartController extends Controller
         return view('clients.pages.cart', compact('cartItems'));
     }
 
+    // Handle update quantity product in Page Cart
     public function updateCart(Request $request)
     {
         $productId = $request->product_id;
@@ -192,6 +193,29 @@ class CartController extends Controller
         ]);
     }
 
+    // Handle remove product in Page Cart
+    public function removeCartItem(Request $request)
+    {
+        $productId = $request->product_id;
+        
+        if(Auth::check())
+        {
+            CartItem::where('user_id', Auth::id())->where('product_id', $productId)->delete();
+        } else {
+            $cart = session()->get('cart', []);
+            unset($cart[$productId]);
+            session()->put('cart', $cart);            
+        }
+        
+        $total = $this->calculateCartTotal();
+        $grandTotal = $total + 25000;
+
+        return response()->json([
+            'total'      => number_format($total, 0, ',', '.'),
+            'grandTotal' => number_format($grandTotal, 0, ',', '.'),
+        ]);
+    }
+
     function calculateCartTotal()
     {
         if (Auth::check()) {
@@ -201,4 +225,5 @@ class CartController extends Controller
             return collect($cart)->sum(fn($item) => $item['quantity'] * $item['price']);
         }
     }
+
 }
