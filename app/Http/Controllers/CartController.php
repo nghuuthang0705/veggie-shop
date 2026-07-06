@@ -109,4 +109,29 @@ class CartController extends Controller
             'cart_count' => $cartCount
         ]);
     }
+
+    // View Cart
+    public function viewCart()
+    {
+        if(Auth::check())
+        {
+            // Get cart from database
+            $cartItems = CartItem::where('user_id', Auth::id())->with('product')->get()->map(function ($item){
+                return [
+                    'product_id' => $item->product->id,
+                    'name'       => $item->product->name,
+                    'price'      => $item->product->price,
+                    'quantity'   => $item->quantity,
+                    'stock'      => $item->product->stock,
+                    'image'      => $item->product->images->first()->image ?? 'uploads/products/default-product.png',
+                ];
+            })->toArray();
+
+        } else {
+            // Get cart from session
+            $cartItems = session()->get('cart', []);
+        }
+
+        return view('clients.pages.cart', compact('cartItems'));
+    }
 }
