@@ -115,7 +115,7 @@ class CartController extends Controller
     {
         if(Auth::check())
         {
-            // Get cart from database
+            // Get Cart from database
             $cartItems = CartItem::where('user_id', Auth::id())->with('product')->get()->map(function ($item){
                 return [
                     'product_id' => $item->product->id,
@@ -128,10 +128,77 @@ class CartController extends Controller
             })->toArray();
 
         } else {
-            // Get cart from session
+            // Get Cart from session
             $cartItems = session()->get('cart', []);
         }
 
         return view('clients.pages.cart', compact('cartItems'));
+    }
+
+    public function updateCart(Request $request)
+    {
+        $productId = $request->product_id;
+        $quantity = $request->quantity;
+        
+        if(Auth::check())
+        {
+            // Update Cart in database
+            $cartItems = CartItem::where('user_id', Auth::id())->where('product_id', $productId)->first();
+
+            if(!$cartItems)
+            {
+                return response()->json(['error' => 'Sản phẩm không tồn tại trong giỏ hàng'], 404);
+            }
+            
+            $product = Product::find($productId);
+            
+            if($quantity > $product->stock)
+            {
+                return response()->json(['error' => 'Số lượng vượt quá tồn kho'], 400);
+            }
+
+            $cartItems->quantity = $quantity;
+            $cartItems->save();
+        } else {
+            // Update Cart in session
+            $cart = session()->get('cart', []);
+
+            if(!isset($cart[$productId]))
+            {
+                return response()->json(['error' => 'Sản phẩm không tồn tại trong giỏ hàng'], 404);
+            }
+            
+            $product = Product::find($productId);
+            
+            if($quantity > $product->stock)
+            {
+                return response()->json(['error' => 'Số lượng vượt quá tồn kho'], 400);
+            }
+
+            $cart[$productId]['quantity'] = $quantity;
+            session()->put('cart', $cart);            
+        }
+        
+        // Calculate carttotal again
+        $subtotal = $quantity * $product->price;
+        $total = $this->calculateCartTotal();
+        $grandTotal = $total + 25000;
+
+        return response()->json([
+            'quantity'   => $quantity,
+            'subtotal'   => number_format($subtotal, 0, ',', '.'),
+            'total'      => number_format($total, 0, ',', '.'),
+            'grandTotal' => number_format($grandTotal, 0, ',', '.'),
+        ]);
+    }
+
+    function calculateCartTotal()
+    {
+        if (Auth::check()) {
+                return CartItem::where('user_id', Auth::id())->with('product')->get()->sum(fn($item) => $item->quantity * $item->product->price);
+        } else {
+            $cart = session()->get('cart', []);
+            return collect($cart)->sum(fn($item) => $item['quantity'] * $item['price']);
+        }
     }
 }

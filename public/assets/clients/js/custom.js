@@ -364,22 +364,43 @@ $(document).ready(function () {
      **** PAGE DETAIL PRODUCTS ****
      ******************************/
 
-    $(document).on("click", ".qtybutton", function () {
-        var $button = $(this);
-        var $input = $button.siblings("input");
-        var oldValue = parseInt($input.val());
-        var maxStock = parseInt($input.data("max"));
+    if (window.location.pathname !== "/cart") {
+        $(document).on("click", ".qtybutton", function () {
+            var $button = $(this);
+            var $input = $button.siblings("input");
+            var oldValue = parseInt($input.val());
+            var maxStock = parseInt($input.data("max"));
 
-        if ($button.hasClass("inc")) {
-            if (oldValue < maxStock) {
-                $input.val(oldValue + 1);
+            if ($button.hasClass("inc")) {
+                if (oldValue < maxStock) {
+                    $input.val(oldValue + 1);
+                }
+            } else {
+                if (oldValue > 1) {
+                    $input.val(oldValue - 1);
+                }
             }
-        } else {
-            if (oldValue > 1) {
-                $input.val(oldValue - 1);
+        });
+    } else {
+        $(document).on("click", ".qtybutton", function () {
+            let $button = $(this);
+            let $input = $button.siblings("input");
+            let oldValue = parseInt($input.val());
+            let maxStock = parseInt($input.data("max"));
+            let productId = $input.data("id");
+            let newValue = oldValue;
+
+            if ($button.hasClass("inc") && oldValue < maxStock) {
+                newValue = oldValue + 1;
+            } else if ($button.hasClass("dec") && oldValue > 1) {
+                newValue = oldValue - 1;
             }
-        }
-    });
+
+            if (newValue != oldValue) {
+                updateCart(productId, newValue, $input);
+            }
+        });
+    }
 
     // Add to Cart
     $(document).on("click", ".add-to-cart-btn", function (e) {
@@ -421,7 +442,7 @@ $(document).ready(function () {
     });
 
     /******************************
-     ********* PAGE CARTS *********
+     ********* MINI CARTS *********
      ******************************/
 
     // Mini Cart
@@ -469,4 +490,39 @@ $(document).ready(function () {
             },
         });
     });
+
+    /******************************
+     ********* PAGE CARTS *********
+     ******************************/
+
+    function updateCart(productId, quantity, $input) {
+        $.ajaxSetup({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+        });
+
+        $.ajax({
+            url: "/cart/update",
+            type: "POST",
+            data: {
+                product_id: productId,
+                quantity: quantity,
+            },
+
+            success: function (response) {
+                $input.val(response.quantity);
+                $input
+                    .closest("tr")
+                    .find(".cart-product-subtotal")
+                    .text(response.total);
+                $(".cart-total").text(response.total);
+                $(".cart-grand-total").text(response.grandTotal);
+            },
+
+            error: function (xhr) {
+                alert(xhr.responseJSON.error);
+            },
+        });
+    }
 });

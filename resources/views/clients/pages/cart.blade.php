@@ -62,7 +62,7 @@
                                     <tbody>
                                         <tr>
                                             <td>Tổng tiền hàng</td>
-                                            <td>{{ number_format($cartTotal, 0, ',', '.') }} đ</td>
+                                            <td><span class="cart-total">{{ number_format($cartTotal, 0, ',', '.') }} đ</span></td>
                                         </tr>
                                         <tr>
                                             <td>Phí vận chuyển</td>
@@ -70,7 +70,7 @@
                                         </tr>
                                         <tr>
                                             <td><strong>Tổng thanh toán</strong></td>
-                                            <td><strong>{{ number_format($cartTotal + 25000, 0, ',', '.') }} đ</strong></td>
+                                            <td><strong><span class="cart-grand-total">{{ number_format($cartTotal + 25000, 0, ',', '.') }} đ</span></strong></td>
                                         </tr>
                                     </tbody>
                                 </table>
