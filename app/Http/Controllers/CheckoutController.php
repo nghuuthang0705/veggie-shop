@@ -11,6 +11,7 @@ use App\Models\ShippingAddress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class CheckoutController extends Controller
 {
@@ -55,7 +56,7 @@ class CheckoutController extends Controller
 
         if($cartItems->isEmpty())
         {
-            return redirect()->route('cart')->with('error', 'Giỏ hàng đang trống!');
+            return redirect()->route('cart.index')->with('error', 'Giỏ hàng đang trống!');
         }
 
         DB::beginTransaction();
@@ -93,12 +94,74 @@ class CheckoutController extends Controller
             CartItem::where('user_id', $user->id)->delete();
 
             DB::commit();
+
             toastr()->success('Đặt hàng thành công!');
+
             return redirect()->route('account');
 
         } catch (\Exception $e)
         {
-            toastr()->error('Có lỗi xảy ra, vui lòng thử lại!');
+            Log::error('Lỗi đặt hàng: '. $e->getMessage());
+            DB::rollBack();
+            toastr()->error('Có lỗi xảy ra, vui lòng thử lại!'. $e->getMessage());
+
+            return redirect()->route('checkout');
+        }
+    }
+
+    public function placeOrderPayPal(Request $request)
+    {
+
+        DB::beginTransaction();
+
+        try {
+            $user = Auth::user();
+            $cartItems = CartItem::where('user_id', $user->id)->get();
+
+            // Create Order
+            $order = new Order();
+            $order->user_id = $user->id;
+            $order->shipping_address_id = $request->address_id;
+            $order->total_price = $request->amount * 25000;
+            $order->status = 'pending'; // Default is 'pending'
+            $order->save();
+
+            foreach($cartItems as $item)
+            {
+                OrderItem::create([
+                    'order_id' => $order->id,
+                    'product_id' => $item->product_id,
+                    'quantity' => $item->quantity,
+                    'price' => $item->product->price
+                ]);
+            }
+
+            // Create Payment
+            Payment::create([
+                'order_id' => $order->id,
+                'payment_method' => 'paypal',
+                'transaction_id' => $request->transactionID,
+                'amount' => $order->total_price,
+                'status' => 'completed',
+                'paid_at' => now(),
+
+            ]);
+
+            // Delete product in cart when ordered
+            CartItem::where('user_id', $user->id)->delete();
+
+            DB::commit();
+
+            toastr()->success('Đặt hàng thành công!');
+
+            return response()->json(['success' => true]);
+
+        } catch (\Exception $e)
+        {
+            Log::error('Lỗi đặt hàng: '. $e->getMessage());
+            DB::rollBack();
+            toastr()->error('Có lỗi xảy ra, vui lòng thử lại!'. $e->getMessage());
+
             return redirect()->route('checkout');
         }
     }
