@@ -40,7 +40,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="input-item input-item-phone ltn__custom-icon">
-                                            <input type="text" name="ltn__lastname" placeholder="Số điện thoại" value="{{ $defaultAddress->phone }}" readonly>
+                                            <input type="text" name="ltn__phone" placeholder="Số điện thoại" value="{{ $defaultAddress->phone }}" readonly>
                                         </div>
                                     </div>
 
@@ -49,13 +49,14 @@
                                     <div class="col-lg-6 col-md-6">
                                         <h6>Địa chỉ</h6>
                                         <div class="input-item">
-                                            <input type="text" placeholder="Số nhà, tên đường" value="{{ $defaultAddress->address }}" readonly>
+                                            <input type="text" name="ltn__address" placeholder="Số nhà, tên đường" value="{{ $defaultAddress->address }}"
+                                                readonly>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6">
                                         <h6>Thành phố</h6>
                                         <div class="input-item">
-                                            <input type="text" placeholder="Thành phố" value="{{ $defaultAddress->city }}" readonly>
+                                            <input type="text" name="ltn__city" placeholder="Thành phố" value="{{ $defaultAddress->city }}" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -104,21 +105,19 @@
                         <h4 class="title-2">Tổng sản phẩm</h4>
                         <table class="table">
                             <tbody>
-                                <tr>
-                                    <td>Vegetables Juices <strong>× 2</strong></td>
-                                    <td>$298.00</td>
-                                </tr>
+                                @foreach ($cartItems as $item)
+                                    <tr>
+                                        <td>{{ $item->product->name }} <strong>× {{ $item->quantity }}</strong></td>
+                                        <td>{{ number_format($item->product->price * $item->quantity, 0, ',', '.') }} đ</td>
+                                    </tr>
+                                @endforeach
                                 <tr>
                                     <td>Vận chuyển và xử lý</td>
-                                    <td>$15.00</td>
-                                </tr>
-                                <tr>
-                                    <td>Vat</td>
-                                    <td>$00.00</td>
+                                    <td>{{ number_format(25000, 0, ',', '.') }} đ</td>
                                 </tr>
                                 <tr>
                                     <td><strong>Tổng tiền</strong></td>
-                                    <td><strong>$633.00</strong></td>
+                                    <td><strong class="totalPrice_Checkout">{{ number_format($totalPrice + 25000, 0, ',', '.') }} đ</strong></td>
                                 </tr>
                             </tbody>
                         </table>
