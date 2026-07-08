@@ -17,7 +17,7 @@
                     <span class="badge bg-primary">Đang xử lý</span>
                 @elseif ($order->status == 'completed')
                     <span class="badge bg-success">Hoàn thành</span>
-                @elseif ($order->status == 'cancled')
+                @elseif ($order->status == 'canceled')
                     <span class="badge bg-danger">Đã hủy</span>
                 @endif
             </p>

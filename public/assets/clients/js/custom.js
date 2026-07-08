@@ -657,4 +657,83 @@ $(document).ready(function () {
             },
         })
         .render("#paypal-button-container");
+
+    /*************************************
+     ******* HANDLE RATING PRODUCT *******
+     *************************************/
+
+    let selectedRating = 0;
+
+    // Handle hover star
+    $(".rating-star").hover(
+        function () {
+            let value = $(this).data("value");
+            highlightStars(value);
+        },
+        function () {
+            highlightStars(selectedRating);
+        },
+    );
+
+    $(".rating-star").click(function (e) {
+        e.preventDefault();
+        selectedRating = $(this).data("value");
+        $("#rating-value").val(selectedRating);
+        highlightStars(selectedRating);
+    });
+
+    function highlightStars(value) {
+        $(".rating-star i").each(function () {
+            let starValue = $(this).parent().data("value");
+            if (starValue <= value) {
+                $(this).removeClass("far").addClass("fas"); // Show star
+            } else {
+                $(this).removeClass("fas").addClass("far"); // Show star empty
+            }
+        });
+    }
+
+    // Handle submit rating with AJAX
+    $("#review-form").submit(function (e) {
+        e.preventDefault();
+
+        let productId = $(this).data("product-id");
+        let rating = $("#rating-value").val();
+        let content = $("#review-content").val();
+
+        if (rating == 0) {
+            $("#review-content").html(
+                '<div class="alert alert-danger">Vui lòng chọn số sao!</div>',
+            );
+            return;
+        }
+
+        $.ajaxSetup({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+        });
+
+        $.ajax({
+            url: "/review",
+            type: "POST",
+            data: {
+                product_id: productId,
+                rating: rating,
+                comment: content,
+            },
+
+            success: function (response) {
+                $("#review-content").val("");
+                highlightStars(0);
+                selectedRating = 0;
+                $(".ltn__comment-reply-area").hide();
+                toastr.success(response.message);
+            },
+
+            error: function (xhr) {
+                alert(xhr.responseJSON.error);
+            },
+        });
+    });
 });
