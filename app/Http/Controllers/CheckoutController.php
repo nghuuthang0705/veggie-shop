@@ -78,6 +78,16 @@ class CheckoutController extends Controller
                     'quantity' => $item->quantity,
                     'price' => $item->product->price
                 ]);
+
+                $product = $item->product;
+
+                if($product->stock < $item->quantity)
+                {
+                    throw new \Exception("Sản phẩm {$product->name} không đủ hàng trong kho.");
+                }
+
+                $product->stock -= $item->quantity;
+                $product->save();
             }
 
             // Create Payment
@@ -134,6 +144,16 @@ class CheckoutController extends Controller
                     'quantity' => $item->quantity,
                     'price' => $item->product->price
                 ]);
+
+                $product = $item->product;
+
+                if($product->stock < $item->quantity)
+                {
+                    throw new \Exception("Sản phẩm {$product->name} không đủ hàng trong kho.");
+                }
+
+                $product->stock -= $item->quantity;
+                $product->save();
             }
 
             // Create Payment

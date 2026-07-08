@@ -69,6 +69,7 @@ Route::middleware(['auth.custom'])->group(function() {
     Route::post('/checkout/paypal', [CheckoutController::class, 'placeOrderPayPal'])->name('checkout.placeOrderPayPal');
 
     Route::get('/order/{id}', [OrderController::class, 'showOrder'])->name('order.show');
+    Route::post('/order/{id}/cancel', [OrderController::class, 'cancel'])->name('order.cancel');
 
 });
 
