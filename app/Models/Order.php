@@ -12,7 +12,7 @@ class Order extends Model
 
     protected $fillable = ['user_id', 'total_price', 'status', 'shipping_address_id'];
 
-    public function oderItems()
+    public function orderItems()
     {
         return $this->hasMany(OrderItem::class);
     }
@@ -22,7 +22,7 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function shippingAddresses()
+    public function shippingAddress()
     {
         return $this->belongsTo(ShippingAddress::class);
     }

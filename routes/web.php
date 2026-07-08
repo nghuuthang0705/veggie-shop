@@ -6,6 +6,7 @@ use App\Http\Controllers\Clients\AccountController;
 use App\Http\Controllers\Clients\AuthController;
 use App\Http\Controllers\Clients\ForgotPasswordController;
 use App\Http\Controllers\Clients\HomeController;
+use App\Http\Controllers\Clients\OrderController;
 use App\Http\Controllers\Clients\ProductController;
 use App\Http\Controllers\Clients\ResetPasswordController;
 use Hoa\Exception\Group;
@@ -66,6 +67,8 @@ Route::middleware(['auth.custom'])->group(function() {
     Route::get('/checkout/get-address', [CheckoutController::class, 'getAddress']);
     Route::post('/checkout', [CheckoutController::class, 'placeOrder'])->name('checkout.placeOrder');
     Route::post('/checkout/paypal', [CheckoutController::class, 'placeOrderPayPal'])->name('checkout.placeOrderPayPal');
+
+    Route::get('/order/{id}', [OrderController::class, 'showOrder'])->name('order.show');
 
 });
 
