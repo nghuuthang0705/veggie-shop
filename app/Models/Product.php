@@ -29,4 +29,9 @@ class Product extends Model
     {
         return $this->hasOne(ProductImage::class)->orderBy('id', 'ASC');
     }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 }
