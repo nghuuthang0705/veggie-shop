@@ -54,3 +54,11 @@
     align-items: center;
     margin: 10px 0px;
 }
+
+/* Search */
+#voice-search {
+    position: absolute;
+    right: 50px;
+    text-align: center;
+    top: 20px;
+}
