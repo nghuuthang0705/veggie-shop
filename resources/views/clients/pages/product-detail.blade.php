@@ -63,7 +63,7 @@
                                                 </div>
                                             </li>
                                             <li>
-                                                <a href="javascript:void(0)" class="theme-btn-1 btn btn-effect-1 add-to-cart-btn" title="Add to Cart"
+                                                <a href="javascript:void(0)" class="theme-btn-1 btn btn-effect-1 add-to-cart-btn" title="Thêm vào giỏ hàng"
                                                     data-id="{{ $product->id }}">
                                                     <i class="fas fa-shopping-cart"></i>
                                                     <span>THÊM VÀO GIỎ HÀNG</span>
@@ -74,7 +74,7 @@
                                     <div class="ltn__product-details-menu-3">
                                         <ul>
                                             <li>
-                                                <a href="#" class="" title="Wishlist" data-bs-toggle="modal" data-bs-target="#liton_wishlist_modal">
+                                                <a href="#" class="" title="Yêu thích" data-bs-toggle="modal" data-bs-target="#liton_wishlist_modal">
                                                     <i class="far fa-heart"></i>
                                                     <span>Yêu thích</span>
                                                 </a>

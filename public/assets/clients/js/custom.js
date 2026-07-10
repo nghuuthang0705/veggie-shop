@@ -817,4 +817,36 @@ $(document).ready(function () {
             },
         });
     });
+
+    $(document).on("click", ".wishlist-product-remove", function (e) {
+        e.preventDefault();
+
+        let productId = $(this).data("id");
+        let row = $(this).closest("tr");
+
+        $.ajaxSetup({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+        });
+
+        $.ajax({
+            url: "/wishlist/remove",
+            type: "POST",
+            data: {
+                product_id: productId,
+            },
+
+            success: function (response) {
+                if (response.status) {
+                    row.remove();
+                    toastr.success("Đã xóa sản phẩm khỏi danh sách yêu thích!");
+                }
+            },
+
+            error: function (xhr) {
+                alert("Có lỗi xảy ra với ajax removeProductWishList!");
+            },
+        });
+    });
 });
