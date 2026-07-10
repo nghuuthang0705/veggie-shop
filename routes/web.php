@@ -11,6 +11,7 @@ use App\Http\Controllers\Clients\OrderController;
 use App\Http\Controllers\Clients\ProductController;
 use App\Http\Controllers\Clients\ResetPasswordController;
 use App\Http\Controllers\Clients\ReviewController;
+use App\Http\Controllers\Clients\WishListController;
 use Hoa\Exception\Group;
 use Illuminate\Support\Facades\Route;
 
@@ -75,6 +76,9 @@ Route::middleware(['auth.custom'])->group(function() {
 
     Route::post('/review', [ReviewController::class, 'createReview']);
     Route::get('/review/{product}', [ReviewController::class, 'index']);
+
+    Route::get('/wishlist', [WishListController::class, 'index'])->name('wishlist');
+    Route::post('/wishlist/add', [WishListController::class, 'addToWishList']);
 
 });
 
