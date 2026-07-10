@@ -11,6 +11,7 @@ use App\Http\Controllers\Clients\OrderController;
 use App\Http\Controllers\Clients\ProductController;
 use App\Http\Controllers\Clients\ResetPasswordController;
 use App\Http\Controllers\Clients\ReviewController;
+use App\Http\Controllers\Clients\SearchController;
 use App\Http\Controllers\Clients\WishListController;
 use Hoa\Exception\Group;
 use Illuminate\Support\Facades\Route;
@@ -102,3 +103,6 @@ Route::post('/cart/remove-cart', [CartController::class, 'removeCartItem'])->nam
 // Handle  Contact
 Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
 Route::post('/contact', [ContactController::class, 'sendContact'])->name('contact');
+
+// Search
+Route::get('/search', [SearchController::class, 'index'])->name('search');
