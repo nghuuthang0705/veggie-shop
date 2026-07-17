@@ -8,13 +8,8 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminAuthController extends Controller
 {
-    public function showLoginForm(Request $request) 
+    public function showLoginForm() 
     {
-        // Auth::guard('admin')->logout();
-
-        // $request->session()->invalidate();
-        // $request->session()->regenerateToken();
-
         return view('admin.pages.login');
     }
 
@@ -49,5 +44,15 @@ class AdminAuthController extends Controller
         toastr()->error('Email hoặc mật khẩu không chính xác.');
 
         return back();
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::guard('admin')->logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('admin.login')->with('success', 'Bạn đã đăng xuất thành công.');
     }
 }
