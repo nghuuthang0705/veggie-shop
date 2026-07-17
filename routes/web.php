@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\CartController;
-use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\Clients\CartController;
+use App\Http\Controllers\Clients\CheckoutController;
 use App\Http\Controllers\Clients\AccountController;
 use App\Http\Controllers\Clients\AuthController;
 use App\Http\Controllers\Clients\ContactController;
@@ -13,29 +13,30 @@ use App\Http\Controllers\Clients\ResetPasswordController;
 use App\Http\Controllers\Clients\ReviewController;
 use App\Http\Controllers\Clients\SearchController;
 use App\Http\Controllers\Clients\WishListController;
-use Hoa\Exception\Group;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::prefix('/')->group(function() {
+    
+    Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/about', function () {
+    Route::get('/about', function () {
     return view('clients.pages.about');
-})->name('about');
+    })->name('about');
 
-Route::get('/service', function () {
+    Route::get('/service', function () {
     return view('clients.pages.service');
-})->name('service');
+    })->name('service');
 
-Route::get('/team', function () {
+    Route::get('/team', function () {
     return view('clients.pages.team');
-})->name('team');
+    })->name('team');
 
-Route::get('/faq', function () {
+    Route::get('/faq', function () {
     return view('clients.pages.faq');
-})->name('faq');
+    })->name('faq');
 
-// Guest
-Route::middleware('guest')->group(function() {
+    // Guest
+    Route::middleware('guest')->group(function() {
     Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
     Route::post('/register', [AuthController::class, 'register'])->name('post-register');
 
@@ -47,12 +48,11 @@ Route::middleware('guest')->group(function() {
 
     Route::get('/reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
     Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword'])->name('password.update');
-});
+    });
 
-Route::get('/activate/{token}', [AuthController::class, 'activate'])->name('activate');
+    Route::get('/activate/{token}', [AuthController::class, 'activate'])->name('activate');
 
-
-Route::middleware(['auth.custom'])->group(function() {
+    Route::middleware(['auth.custom'])->group(function() {
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::prefix('account')->group(function(){
@@ -82,27 +82,33 @@ Route::middleware(['auth.custom'])->group(function() {
     Route::post('/wishlist/add', [WishListController::class, 'addToWishList']);
     Route::post('/wishlist/remove', [WishListController::class, 'removeWishListItem']);
 
-});
+    });
 
-Route::get('/products', [ProductController::class, 'index'])->name('products.index');
-Route::get('/products/filter', [ProductController::class, 'filter'])->name('products.filter');
+    Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+    Route::get('/products/filter', [ProductController::class, 'filter'])->name('products.filter');
 
-// Detail Product
-Route::get('/product/{slug}', [ProductController::class, 'detail'])->name('product.detail');
+    // Detail Product
+    Route::get('/product/{slug}', [ProductController::class, 'detail'])->name('product.detail');
 
-// Handle Cart
-Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
-Route::post('/cart/remove', [CartController::class, 'removeFromMiniCart'])->name('cart.remove');
-Route::get('/mini-cart', [CartController::class, 'loadMiniCart'])->name('cart.mini');
+    // Handle Cart
+    Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+    Route::post('/cart/remove', [CartController::class, 'removeFromMiniCart'])->name('cart.remove');
+    Route::get('/mini-cart', [CartController::class, 'loadMiniCart'])->name('cart.mini');
 
-// Handle Page Cart
-Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.index');
-Route::post('/cart/update', [CartController::class, 'updateCart'])->name('cart.update');
-Route::post('/cart/remove-cart', [CartController::class, 'removeCartItem'])->name('cart.remove');
+    // Handle Page Cart
+    Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.index');
+    Route::post('/cart/update', [CartController::class, 'updateCart'])->name('cart.update');
+    Route::post('/cart/remove-cart', [CartController::class, 'removeCartItem'])->name('cart.remove');
 
-// Handle  Contact
-Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
-Route::post('/contact', [ContactController::class, 'sendContact'])->name('contact');
+    // Handle  Contact
+    Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
+    Route::post('/contact', [ContactController::class, 'sendContact'])->name('contact');
 
-// Search
-Route::get('/search', [SearchController::class, 'index'])->name('search');
+    // Search
+    Route::get('/search', [SearchController::class, 'index'])->name('search');
+
+}); 
+
+
+
+require __DIR__.'/admin.php';
