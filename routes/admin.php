@@ -20,7 +20,11 @@ Route::prefix('admin')->group(function() {
         })->name('admin.dashboard');
     });
 
-    
+    Route::middleware(['permission:manage_users'])->group(function() {
+        Route::get('/users', function() {
+            return;
+        })->name('admin.users.index');
+    });
 }); 
 
 ?>
