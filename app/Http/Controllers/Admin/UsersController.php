@@ -14,4 +14,33 @@ class UsersController extends Controller
 
         return view('admin.pages.users', compact('users'));
     }
+
+    /**
+     * Upgrade a user to staff role.
+     * 
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function upgrade(Request $request)
+    {
+        $userId = $request->user_id;
+
+        $user = User::find($userId);
+
+        if(!$user) {
+            return response()->json([
+                'status'  => false,
+                'message' => 'Không tìm thấy người dùng.'
+            ]);
+        }
+
+        $user->role_id = 2; // Role = 2 same as 'staff'
+        $user->save();
+
+        // Response with success message
+        return response()->json([
+            'status'  => true,
+            'message' => 'Đã cập nhật thành nhân viên.'
+        ]);
+    }
 }

@@ -6,8 +6,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->group(function() {
 
-    
-
     Route::middleware(['check.auth.admin'])->group(function() {
         Route::get('/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
         Route::post('/login', [AdminAuthController::class, 'login'])->name('admin.login.post');
@@ -23,6 +21,7 @@ Route::prefix('admin')->group(function() {
 
     Route::middleware(['permission:manage_users'])->group(function() {
         Route::get('/users', [UsersController::class, 'index'])->name('admin.users.index');
+        Route::post('/user/upgrade', [UsersController::class, 'upgrade']);
     });
 }); 
 
