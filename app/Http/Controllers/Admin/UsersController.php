@@ -27,7 +27,7 @@ class UsersController extends Controller
 
         $user = User::find($userId);
 
-        if(!$user) {
+        if (!$user) {
             return response()->json([
                 'status'  => false,
                 'message' => 'Không tìm thấy người dùng.'
@@ -41,6 +41,30 @@ class UsersController extends Controller
         return response()->json([
             'status'  => true,
             'message' => 'Đã cập nhật thành nhân viên.'
+        ]);
+    }
+
+    public function updateStatus(Request $request)
+    {
+        $userId = $request->user_id;
+        $status = $request->status;
+
+        $user = User::find($userId);
+
+        if (!$user) {
+            return response()->json([
+                'status'  => false,
+                'message' => 'Không tìm thấy người dùng.'
+            ]);
+        }
+
+        $user->status = $status;
+        $user->save();
+
+        // Response with success message
+        return response()->json([
+            'status'  => true,
+            'message' => 'Trạng thái người dùng đã được cập nhật.'
         ]);
     }
 }
