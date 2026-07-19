@@ -203,4 +203,45 @@ $(document).ready(function () {
             },
         });
     });
+
+    //DELETE CATEGORY
+    $(document).on("click", ".btn-delete-category", function (e) {
+        e.preventDefault();
+        let button = $(this);
+        let categoryId = button.data("id");
+        let row = button.closest("tr");
+
+        if (confirm("Bạn có chắc chắn muốn xóa danh mục này?")) {
+            $.ajaxSetup({
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                        "content",
+                    ),
+                },
+            });
+
+            $.ajax({
+                url: "categories/delete",
+                type: "POST",
+                data: {
+                    category_id: categoryId,
+                },
+
+                success: function (response) {
+                    if (response.status) {
+                        toastr.success(response.message);
+                        row.fadeOut(300, function () {
+                            $(this).remove();
+                        });
+                    } else {
+                        toastr.error(response.message);
+                    }
+                },
+
+                error: function (xhr, status, error) {
+                    alert("Có lỗi xảy ra ! Vui lòng thử lại." + error);
+                },
+            });
+        }
+    });
 });

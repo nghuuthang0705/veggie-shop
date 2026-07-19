@@ -65,7 +65,7 @@
                                                             </a>
                                                         </td>
                                                         <td>
-                                                            <a class="btn btn-app btn-delete-category">
+                                                            <a class="btn btn-app btn-delete-category" data-id="{{ $category->id }}">
                                                                 <i class="fa fa-trash"></i>Xóa
                                                             </a>
                                                         </td>

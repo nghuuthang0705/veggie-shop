@@ -32,6 +32,7 @@ Route::prefix('admin')->group(function() {
 
         Route::get('/categories', [CategoryController::class, 'index'])->name('admin.categories.index');
         Route::post('/categories/update', [CategoryController::class, 'updateCategory']);
+        Route::post('/categories/delete', [CategoryController::class, 'deleteCategory']);
 
     });
 }); 
