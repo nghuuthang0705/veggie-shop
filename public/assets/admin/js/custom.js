@@ -86,6 +86,7 @@ $(document).ready(function () {
 
     $("#category-image").change(function () {
         let file = this.files[0];
+
         if (file) {
             let reader = new FileReader();
             reader.onload = function (e) {
@@ -103,5 +104,103 @@ $(document).ready(function () {
         form.find('input[type="file"]').val("");
         form.find("#image-preview").html("");
         form.find("#image-preview").attr("src", "");
+    });
+
+    $(".category-image").change(function () {
+        let file = this.files[0];
+        let categoryId = $(this).data("id");
+
+        if (file) {
+            let reader = new FileReader();
+            reader.onload = function (e) {
+                $(".image-preview").each(function () {
+                    if (
+                        $(this).closest(".modal").attr("id") ===
+                        "modalUpdate-" + categoryId
+                    ) {
+                        $(this).attr("src", e.target.result);
+                    }
+                });
+            };
+            reader.readAsDataURL(file);
+        } else {
+            $("#image-preview").attr("src", "");
+        }
+    });
+
+    //UPDATE CATEGORY
+    $(document).on("click", ".btn-update-submit-category", function (e) {
+        e.preventDefault();
+
+        let button = $(this);
+        let categoryId = button.data("id");
+        let form = button.closest(".modal").find("form");
+        let formData = new FormData(form[0]);
+
+        formData.append("category_id", categoryId);
+
+        $.ajaxSetup({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+        });
+
+        $.ajax({
+            url: "categories/update",
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+
+            beforeSend: function () {
+                button.prop("disabled", true);
+                button.text("Đang cập nhật...");
+            },
+
+            success: function (response) {
+                if (response.status) {
+                    toastr.success(response.message);
+                    let categoryId = response.data.id;
+
+                    // Regenerate new HTML for updated row
+                    let newRow = `
+                        <tr id="category-row-${categoryId}">
+                        <td>
+                            <img src="${response.data.image}" alt="${response.data.name}" width="80px">
+                        </td>
+                            <td>${response.data.name}</td>
+                            <td>${response.data.slug}</td>
+                            <td>${response.data.description}</td>
+                            <td>
+                                <a class="btn btn-app btn-update-category" data-toggle="modal"
+                                    data-target="#modalUpdate-${categoryId}">
+                                    <i class="fa fa-edit"></i>Chỉnh sửa
+                                </a>
+                            </td>
+                            <td>
+                                <a class="btn btn-app btn-delete-category" data-id="${categoryId}">
+                                    <i class="fa fa-trash"></i>Xóa
+                                </a>
+                            </td>
+                        </tr>`;
+
+                    // Replace old row with new row
+                    $("#category-row-" + categoryId).replaceWith(newRow);
+
+                    $("#modalUpdate-" + categoryId).modal("hide");
+                } else {
+                    toastr.error(response.message);
+                }
+            },
+
+            error: function (xhr, status, error) {
+                alert("An error occurred: " + error);
+            },
+
+            complete: function () {
+                button.prop("disabled", false);
+                button.text("Chỉnh sửa");
+            },
+        });
     });
 });

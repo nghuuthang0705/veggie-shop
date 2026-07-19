@@ -36,9 +36,10 @@
                                     <label class="col-form-label col-md-3 col-sm-3 label-align" for="category-name">Tên Danh Mục <span class="required">*</span>
                                     </label>
                                     <div class="col-md-6 col-sm-6 ">
-                                        <input type="text" id="category-name" name="name" required="required" class="form-control ">
+                                        <input type="text" id="category-name" name="name" required="required" class="form-control">
                                     </div>
                                 </div>
+
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-3 col-sm-3 label-align" for="category-description">Mô tả <span class="required">*</span>
                                     </label>
@@ -63,7 +64,6 @@
                                         <button type="submit" class="btn btn-success">Thêm Danh Mục</button>
                                     </div>
                                 </div>
-
                             </form>
                         </div>
                     </div>
