@@ -39,4 +39,11 @@ class CategoryController extends Controller
 
         return redirect()->route('admin.categories.add')->with('success', 'Danh mục đã được thêm thành công!');
     }
+
+    public function index()
+    {
+        $categories = Category::all();
+        
+        return view('admin.pages.categories', compact('categories'));
+    }
 }
