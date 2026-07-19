@@ -12,6 +12,7 @@
                 </div>
             </div>
 
+            <div class="clearfix"></div>
             <div class="x_panel">
                 <div class="x_content">
                     <div class="row">

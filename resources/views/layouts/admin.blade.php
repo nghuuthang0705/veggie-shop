@@ -36,6 +36,9 @@
 
     <!-- Import CSS for Toastr -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ asset('assets/admin/css/custom.css') }}">
 </head>
 
 <body class="nav-md">

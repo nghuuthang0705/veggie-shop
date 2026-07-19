@@ -79,4 +79,29 @@ $(document).ready(function () {
             },
         });
     });
+
+    /***********************************
+     ****** MANAGEMENT CATEGORIES ******
+     ***********************************/
+
+    $("#category-image").change(function () {
+        let file = this.files[0];
+        if (file) {
+            let reader = new FileReader();
+            reader.onload = function (e) {
+                $("#image-preview").attr("src", e.target.result);
+            };
+            reader.readAsDataURL(file);
+        } else {
+            $("#image-preview").attr("src", "");
+        }
+    });
+
+    $(".btn-reset").on("click", function () {
+        let form = $(this).closest("form");
+        form.trigger("reset");
+        form.find('input[type="file"]').val("");
+        form.find("#image-preview").html("");
+        form.find("#image-preview").attr("src", "");
+    });
 });
