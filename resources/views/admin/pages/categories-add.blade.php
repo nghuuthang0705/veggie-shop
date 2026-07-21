@@ -14,7 +14,7 @@
 
             <div class="clearfix"></div>
             <div class="row">
-                <div class="col-md-12 col-sm-12 ">
+                <div class="col-md-12 col-sm-12">
                     <div class="x_panel disabled-panel">
                         <div class="x_title">
                             <h2>Thêm Danh Mục Mới <small style="color: red">(Hiện tại đã có 5 danh mục, và không cần thiết phải thêm vì nó đã đầy đủ với chức năng
@@ -58,6 +58,7 @@
                                 </div>
 
                                 <div class="ln_solid"></div>
+
                                 <div class="item form-group">
                                     <div class="col-md-6 col-sm-6 offset-md-3">
                                         <button class="btn btn-primary btn-reset" type="reset">Reset</button>
