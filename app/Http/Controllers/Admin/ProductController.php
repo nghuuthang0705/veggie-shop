@@ -142,4 +142,26 @@ class ProductController extends Controller
             ],
         ]);
     }
+
+    public function deleteProduct(Request $request)
+    {
+        $request->validate([
+           'id' => 'required|exists:products,id', 
+        ]);
+
+        $product = Product::findOrFail($request->id);
+
+        // Delete product images
+        foreach($product->images as $image) {
+            Storage::disk('public')->delete($image->image);
+        }
+
+        // Delete product
+        $product->delete();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Xóa sản phẩm thành công!',
+        ]);
+    }
 }

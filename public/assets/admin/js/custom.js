@@ -403,4 +403,45 @@ $(document).ready(function () {
             },
         });
     });
+
+    // DELETE PRODUCT
+    $(document).on("click", ".btn-delete-product", function (e) {
+        e.preventDefault();
+        let button = $(this);
+        let productId = button.data("id");
+        let row = button.closest("tr");
+
+        if (confirm("Bạn có chắc chắn muốn xóa sản phẩm này?")) {
+            $.ajaxSetup({
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                        "content",
+                    ),
+                },
+            });
+
+            $.ajax({
+                url: "product/delete",
+                type: "POST",
+                data: {
+                    id: productId,
+                },
+
+                success: function (response) {
+                    if (response.status) {
+                        toastr.success(response.message);
+                        row.fadeOut(300, function () {
+                            $(this).remove();
+                        });
+                    } else {
+                        toastr.error(response.message);
+                    }
+                },
+
+                error: function (xhr, status, error) {
+                    alert("Có lỗi xảy ra ! Vui lòng thử lại. " + error);
+                },
+            });
+        }
+    });
 });
