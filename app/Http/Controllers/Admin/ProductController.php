@@ -65,4 +65,11 @@ class ProductController extends Controller
 
         return redirect()->route('admin.product.add')->with('success', 'Thêm sản phẩm thành công!');
     }
+
+    public function index()
+    {
+        $products = Product::with('category', 'images')->get();
+
+        return view('admin.pages.products', compact('products'));
+    }
 }

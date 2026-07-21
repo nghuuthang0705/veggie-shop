@@ -44,6 +44,6 @@ Route::prefix('admin')->group(function() {
         Route::post('/product/update', [ProductController::class, 'updateProduct']);
         Route::post('/product/delete', [ProductController::class, 'deleteProduct']);
     });
-}); 
+});
 
 ?>
