@@ -21,7 +21,8 @@
 }
 
 #category-image,
-#product-images {
+#product-images,
+.product-images {
     display: none;
 }
 
@@ -52,4 +53,12 @@
 
 .category-image {
     display: none;
+}
+
+.image-preview-listproduct {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    width: 100%;
+    margin-top: 10px;
+    gap: 5px;
 }

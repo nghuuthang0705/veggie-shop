@@ -107,15 +107,6 @@ Route::prefix('/')->group(function() {
     // Search
     Route::get('/search', [SearchController::class, 'index'])->name('search');
 
-}); 
-
-Route::get('/check-gd', function () {
-    return [
-        'php_version' => PHP_VERSION,
-        'gd_loaded' => extension_loaded('gd'),
-        'gd_info' => function_exists('gd_info') ? gd_info() : null,
-    ];
 });
-
 
 require __DIR__.'/admin.php';

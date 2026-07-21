@@ -93,6 +93,7 @@
                                                                                     class="form-control" value="{{ $category->name }}">
                                                                             </div>
                                                                         </div>
+
                                                                         <div class="item form-group">
                                                                             <label class="col-form-label col-md-3 col-sm-3 label-align"
                                                                                 for="category-description">Mô tả <span class="required">*</span>
@@ -114,10 +115,8 @@
                                                                                 <input type="file" name="image" class="category-image"
                                                                                     id="category-image-{{ $category->id }}" data-id="{{ $category->id }}"
                                                                                     accept="image/*">
-
                                                                             </div>
                                                                         </div>
-
                                                                     </form>
                                                                 </div>
                                                                 <div class="modal-footer">
