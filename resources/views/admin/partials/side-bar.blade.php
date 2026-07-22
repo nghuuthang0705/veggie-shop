@@ -31,14 +31,14 @@
                     <li><a href="{{ route('admin.dashboard') }}"><i class="fa fa-home"></i> Dashboard</a></li>
 
                     @if ($adminUser->role->permissions->contains('name', 'manage_users'))
-                        <li><a href="#"><i class="fa fa-users"></i> Quản lý người dùng</a></li>
+                        <li><a href="{{ route('admin.users.index') }}"><i class="fa fa-users"></i> Quản lý người dùng</a></li>
                     @endif
 
                     @if ($adminUser->role->permissions->contains('name', 'manage_categories'))
                         <li><a><i class="fa fa-tags"></i> Quản lý danh mục<span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
-                                <li><a href="general_elements.html"> Thêm danh mục</a></li>
-                                <li><a href="media_gallery.html"> Danh sách danh mục</a></li>
+                                <li><a href="{{ route('admin.categories.add') }}"> Thêm danh mục</a></li>
+                                <li><a href="{{ route('admin.categories.index') }}"> Danh sách danh mục</a></li>
                             </ul>
                         </li>
                     @endif
@@ -46,14 +46,14 @@
                     @if ($adminUser->role->permissions->contains('name', 'manage_products'))
                         <li><a><i class="fa fa-cube"></i> Quản lý sản phẩm<span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
-                                <li><a href="general_elements.html"> Thêm sản phẩm</a></li>
-                                <li><a href="media_gallery.html"> Danh sách sản phẩm</a></li>
+                                <li><a href="{{ route('admin.product.add') }}"> Thêm sản phẩm</a></li>
+                                <li><a href="{{ route('admin.products.index') }}"> Danh sách sản phẩm</a></li>
                             </ul>
                         </li>
                     @endif
 
                     @if (@$adminUser->role->permissions->contains('name', 'manage_orders'))
-                        <li><a href="#"><i class="fa fa-shopping-cart"></i> Quản lý đơn hàng</a></li>
+                        <li><a href="{{ route('admin.orders.index') }}"><i class="fa fa-shopping-cart"></i> Quản lý đơn hàng</a></li>
                     @endif
 
                     @if ($adminUser->role->permissions->contains('name', 'manage_contacts'))

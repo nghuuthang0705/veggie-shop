@@ -91,7 +91,9 @@
                                                                         <a href="javascript:void(0)" class="dropdown-item confirm-order"
                                                                             data-id="{{ $order->id }}">Xác nhận</a>
                                                                     @endif
-                                                                    <a class="dropdown-item" target="_blank" href="#">Xem chi tiết</a>
+                                                                    <a class="dropdown-item" target="_blank"
+                                                                        href="{{ route('admin.order.detail', ['id' => $order->id]) }}">Xem chi
+                                                                        tiết</a>
                                                                 </div>
                                                             </div>
                                                         </td>

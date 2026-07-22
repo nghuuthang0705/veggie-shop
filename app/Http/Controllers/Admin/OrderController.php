@@ -34,4 +34,11 @@ class OrderController extends Controller
             'message' => 'Đơn hàng không tồn tại!',
         ]);
     }
+
+    public function showOrderDetail($id)
+    {
+        $order = Order::with('orderItems.product', 'shippingAddress', 'user', 'payment')->find($id);
+
+        return view('admin.pages.order-detail', compact('order'));
+    }
 }
