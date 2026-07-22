@@ -13,4 +13,25 @@ class OrderController extends Controller
         $orders = Order::with('orderItems', 'shippingAddress', 'user', 'payment')->get();
         return view('admin.pages.orders', compact('orders'));
     }
+
+    public function confirmOrder(Request $request)
+    {
+        $order = Order::find($request->id);
+
+        if ($order) {
+            $order->status = 'processing';
+
+            $order->save();
+            
+            return response()->json([
+                'status' => true,
+                'message' => 'Xác nhận đơn hàng thành công!',
+            ]);
+        }
+
+        return response()->json([
+            'status' => false,
+            'message' => 'Đơn hàng không tồn tại!',
+        ]);
+    }
 }

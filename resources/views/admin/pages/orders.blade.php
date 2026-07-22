@@ -59,7 +59,7 @@
                                                                 data-target="#addressShippingModal-{{ $order->id }}">{{ $order->shippingAddress->address }}</a>
                                                         </td>
                                                         <td>{{ number_format($order->total_price, 0, ',', '.') }} VNĐ</td>
-                                                        <td>
+                                                        <td class="order-status">
                                                             @if ($order->status == 'pending')
                                                                 <span class="custom-badge badge badge-warning">Đợi xác nhận</span>
                                                             @elseif ($order->status == 'processing')
