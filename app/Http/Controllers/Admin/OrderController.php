@@ -63,6 +63,32 @@ class OrderController extends Controller
                 'message' => 'Không thể gửi hóa đơn qua email. Vui lòng thử lại sau. ' . $th->getMessage(),
             ]);
         }
-
     }
+
+    public function cancelOrder(Request $request)
+    {
+        $id = $request->id;
+        $order = Order::find($id);
+        
+        if ($order) {
+            foreach($order->orderItems as $item) {
+                // Update product stock
+                $item->product->increment('stock', $item->quantity);
+            }
+
+            $order->status = 'canceled';
+            $order->save();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Đơn hàng đã được hủy thành công!',
+            ]);
+        }
+        
+        return response()->json([
+            'status' => false,
+            'message' => 'Đơn hàng không tồn tại!',
+        ]);
+    }
+
 }

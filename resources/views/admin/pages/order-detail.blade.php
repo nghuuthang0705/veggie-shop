@@ -143,7 +143,7 @@
                                             <button class="btn btn-success pull-right send-invoice-mail" data-id="{{ $order->id }}"><i class="fa fa-send"></i>
                                                 Gửi hóa đơn</button>
                                             @if ($order->status == 'pending')
-                                                <button class="btn btn-danger pull-right" style="margin-right: 5px" data-id="{{ $order->id }}">
+                                                <button class="btn btn-danger pull-right cancel-order" style="margin-right: 5px" data-id="{{ $order->id }}">
                                                     <i class="fa fa-remove">Hủy đơn hàng</i>
                                                 </button>
                                             @endif

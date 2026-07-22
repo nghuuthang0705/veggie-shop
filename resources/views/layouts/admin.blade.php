@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="images/favicon.ico" type="image/ico" />
+    <link rel="icon" href="{{ asset('assets/admin/images/favicon.ico') }}" type="image/ico" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>@yield('title')</title>
@@ -65,7 +65,7 @@
                 @yield('content');
             </main>
 
-            @include('admin.partials.footer')
+            {{-- @include('admin.partials.footer') --}}
 
         </div>
     </div>
