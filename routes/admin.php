@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\UsersController;
@@ -53,6 +54,12 @@ Route::prefix('admin')->group(function() {
         Route::get('/order-detail/{id}', [OrderController::class, 'showOrderDetail'])->name('admin.order.detail');
         Route::post('/order-detail/send-invoice', [OrderController::class, 'sendMailInvoice']);
         Route::post('/order-detail/cancel-order', [OrderController::class, 'cancelOrder']);
+    });
+
+    Route::middleware(['permission:manage_contacts'])->group(function() {
+        Route::get('/contacts', [ContactController::class, 'index'])->name('admin.contacts.index');
+        Route::post('/contact/reply', [ContactController::class, 'replyContact']);
+        
     });
 });
 

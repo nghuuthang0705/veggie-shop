@@ -557,4 +557,89 @@ $(document).ready(function () {
             },
         });
     });
+
+    /***********************************
+     ******* MANAGEMENT CONTACTS *******
+     ***********************************/
+
+    if ($("#editor-contact").length) {
+        CKEDITOR.replace("editor-contact");
+    }
+
+    $(document).on("click", ".contact-item", function (e) {
+        // Get contact data from clicked item
+        let contactName = $(this).data("name");
+        let contactEmail = $(this).data("email");
+        let contactMessage = $(this).data("message");
+        let contactId = $(this).data("id");
+        let isReplied = $(this).attr("data-is_replied");
+
+        $(".mail_view .inbox-body .sender-info strong").text(contactName);
+        $(".mail_view .inbox-body .sender-info span").text(
+            " (" + contactEmail + ")",
+        );
+        $(".mail_view .view-mail p").text(contactMessage);
+
+        $(".mail_view").show();
+
+        if (isReplied != 0) {
+            $("#compose").hide();
+        } else {
+            // Add attribute data-email to button reply
+            $(".send-reply-contact").attr("data-email", contactEmail);
+            $(".send-reply-contact").attr("data-id", contactId);
+            $("#compose").show();
+        }
+    });
+
+    $(document).on("click", ".send-reply-contact", function (e) {
+        e.preventDefault();
+
+        let button = $(this);
+        let email = button.data("email");
+        let contactId = button.data("id");
+        let message = CKEDITOR.instances["editor-contact"].getData();
+
+        $.ajaxSetup({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "contact/reply",
+            data: {
+                email: email,
+                message: message,
+                contact_id: contactId,
+            },
+
+            success: function (response) {
+                if (response.status) {
+                    toastr.success(response.message);
+                    $(".mail_view").hide();
+                    $("#compose").hide();
+                    CKEDITOR.instances["editor-contact"].setData("");
+                    // $("#editor-contact").empty();
+
+                    let contactItem = $(
+                        '.contact-item[data-id="' + contactId + '"]',
+                    );
+                    contactItem.attr("data-is_replied", "1");
+
+                    contactItem.find("i.fa-circle").css("color", "green");
+
+                    $(".compose").slideToggle();
+                    button.removeAttr("data-email").removeAttr("data-id");
+                } else {
+                    toastr.error(response.message);
+                }
+            },
+
+            error: function (xhr, status, error) {
+                alert("An error occurred: " + error);
+            },
+        });
+    });
 });

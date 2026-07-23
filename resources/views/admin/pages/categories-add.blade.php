@@ -8,7 +8,7 @@
         <div class="">
             <div class="page-title">
                 <div class="title_left">
-                    <h3>Tạo Danh Mục</h3>
+                    <h3>Quản lý danh mục</h3>
                 </div>
             </div>
 
@@ -17,7 +17,7 @@
                 <div class="col-md-12 col-sm-12">
                     <div class="x_panel disabled-panel">
                         <div class="x_title">
-                            <h2>Thêm Danh Mục Mới <small style="color: red">(Hiện tại đã có 5 danh mục, và không cần thiết phải thêm vì nó đã đầy đủ với chức năng
+                            <h2>Thêm danh mục mới <small style="color: red">(Hiện tại đã có 5 danh mục, và không cần thiết phải thêm vì nó đã đầy đủ với chức năng
                                     của website.)</small></h2>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>

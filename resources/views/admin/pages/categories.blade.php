@@ -8,7 +8,7 @@
         <div class="">
             <div class="page-title">
                 <div class="title_left">
-                    <h3>Quản lý danh mục <small>Danh sách tất cả danh mục</small></h3>
+                    <h3>Quản lý danh mục</h3>
                 </div>
             </div>
 
@@ -17,7 +17,7 @@
                 <div class="col-md-12 col-sm-12 ">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>Danh sách danh mục</h2>
+                            <h2>Danh sách tất cả danh mục</h2>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                 </li>

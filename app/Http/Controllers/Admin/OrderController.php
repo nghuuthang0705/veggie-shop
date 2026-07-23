@@ -57,6 +57,7 @@ class OrderController extends Controller
                 'status' => true,
                 'message' => 'Hóa đơn đã được gửi qua email!',
             ]);
+            
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => false,
