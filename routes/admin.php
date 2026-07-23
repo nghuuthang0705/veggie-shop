@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AccountController;
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ContactController;
@@ -21,7 +22,9 @@ Route::prefix('admin')->group(function() {
         Route::get('/dashboard', function() {
             return view('admin.pages.dashboard');
         })->name('admin.dashboard');
-    });
+    
+    Route::get('/profile', [AccountController::class, 'index'])->name('admin.profile');
+    Route::post('/profile/update', [AccountController::class, 'updateProfile']);
 
     Route::middleware(['permission:manage_users'])->group(function() {
         Route::get('/users', [UsersController::class, 'index'])->name('admin.users.index');
@@ -58,8 +61,9 @@ Route::prefix('admin')->group(function() {
 
     Route::middleware(['permission:manage_contacts'])->group(function() {
         Route::get('/contacts', [ContactController::class, 'index'])->name('admin.contacts.index');
-        Route::post('/contact/reply', [ContactController::class, 'replyContact']);
-        
+        Route::post('/contact/reply', [ContactController::class, 'replyContact']); 
+    });
+
     });
 });
 

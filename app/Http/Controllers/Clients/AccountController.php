@@ -43,7 +43,7 @@ class AccountController extends Controller
             $file = $request->file('avatar');
 
             // Create new name with timestamp
-            $filename = time() . '_' . uniqid() . '_' . $file->getClientOriginalExtension();
+            $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
         
             // Save image to folder storage/app/public/uploads/users/tenfile.jpg
             $avatarPath = $file->storeAs('uploads/users', $filename, 'public');

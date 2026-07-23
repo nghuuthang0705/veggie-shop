@@ -66,3 +66,10 @@
 .custom-badge {
     padding: 10px 10px;
 }
+
+.img-account {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+}

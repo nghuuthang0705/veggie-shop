@@ -642,4 +642,161 @@ $(document).ready(function () {
             },
         });
     });
+
+    /**********************************
+     ******* MANAGEMENT PROFILE *******
+     **********************************/
+
+    $(".form-change-password").on("click", function (e) {
+        e.preventDefault();
+
+        $("#change-password").toggle();
+
+        if ($("#change-password").is(":visible")) {
+            $(this).text("Đóng");
+        } else {
+            $(this).text("Đổi mật khẩu");
+        }
+    });
+
+    $(".update-avatar").on("click", function (e) {
+        e.preventDefault();
+        $("#avatar").trigger("click");
+    });
+
+    $("#avatar").on("change", function (e) {
+        let file = e.target.files[0];
+
+        if (file) {
+            let reader = new FileReader();
+            reader.onload = function (e) {
+                $("#avatar-preview").attr("src", e.target.result);
+            };
+            reader.readAsDataURL(file);
+
+            // Create formData to send image
+            let formData = new FormData();
+
+            formData.append("type", "avatar");
+            formData.append("avatar", file);
+
+            updateProfile(formData);
+        } else {
+            $("#avatar-preview").attr("src", "");
+        }
+    });
+
+    $("#update-profile").submit(function (e) {
+        let valid = true;
+        let name = $("#name").val().trim();
+        let phone = $("#phone").val().trim();
+        let address = $("#address").val().trim();
+
+        e.preventDefault();
+
+        if (name.length < 3) {
+            toastr.error("Họ và tên phải có ít nhất 3 ký tự.");
+            valid = false;
+        }
+
+        let phoneRegex = /^0\d{9}$/;
+        if (!phoneRegex.test(phone)) {
+            toastr.error(
+                "Số điện thoại không hợp lệ. Phải có 10 số và bắt đầu bằng 0.",
+            );
+            valid = false;
+        }
+
+        if (address === "") {
+            toastr.error("Địa chỉ không được để trống.");
+            valid = false;
+        }
+
+        if (valid) {
+            let formData = new FormData();
+            formData.append("type", "profile");
+            formData.append("name", name);
+            formData.append("phone", phone);
+            formData.append("address", address);
+
+            updateProfile(formData);
+        }
+    });
+
+    $("#change-password").submit(function (e) {
+        let valid = true;
+        let current_password = $("#current_password").val().trim();
+        let new_password = $("#new_password").val().trim();
+        let confirm_password = $("#confirm_password").val().trim();
+
+        e.preventDefault();
+
+        if (current_password === "") {
+            toastr.error("Bạn cần phải nhập mật khẩu hiện tại.");
+            valid = false;
+        }
+
+        if (new_password.length < 6) {
+            toastr.error("Mật khẩu mới phải có ít nhất 6 ký tự.");
+            valid = false;
+        }
+
+        if (new_password !== confirm_password) {
+            toastr.error("Mật khẩu xác nhận không khớp.");
+            valid = false;
+        }
+
+        if (valid) {
+            let formData = new FormData();
+            formData.append("type", "password");
+            formData.append("current_password", current_password);
+            formData.append("new_password", new_password);
+            formData.append("confirm_password", confirm_password);
+
+            updateProfile(formData);
+        }
+    });
+
+    function updateProfile(formData) {
+        $.ajaxSetup({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+        });
+
+        $.ajax({
+            url: "profile/update",
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            dataType: "json",
+
+            success: function (response) {
+                if (response.status) {
+                    toastr.success(response.message);
+
+                    if (formData.get("type") === "profile") {
+                        $("#user-name").text(formData.get("name"));
+                        $("#user-address").text(formData.get("address"));
+                        $("#user-phone").text(formData.get("phone"));
+                    }
+
+                    if (formData.get("type") === "password") {
+                        $("#change-password")[0].reset();
+                    }
+
+                    if (formData.get("type") === "avatar") {
+                        $("#avatar-preview").attr("src", response.avatar_url);
+                    }
+                } else {
+                    toastr.error(response.message);
+                }
+            },
+
+            error: function (xhr, status, error) {
+                alert("An error occurred: " + error);
+            },
+        });
+    }
 });
