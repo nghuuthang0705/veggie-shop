@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AccountController;
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ContactController;
+use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\UsersController;
@@ -27,6 +28,8 @@ Route::prefix('admin')->group(function() {
     
     Route::get('/profile', [AccountController::class, 'index'])->name('admin.profile');
     Route::post('/profile/update', [AccountController::class, 'updateProfile']);
+    
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('admin.notifications.index');
 
     Route::middleware(['permission:manage_users'])->group(function() {
         Route::get('/users', [UsersController::class, 'index'])->name('admin.users.index');

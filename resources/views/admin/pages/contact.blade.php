@@ -40,7 +40,7 @@
                                                     <i class="fa fa-circle" style="color: {{ $contact->is_replied ? 'green' : 'red' }}"></i>
                                                 </div>
                                                 <div class="right">
-                                                    <h3>{{ $contact->full_name }} <small>{{ $contact->created_at->format('d-m-Y h:i A') }}</small></h3>
+                                                    <h3>{{ $contact->full_name }} <small>{{ $contact->created_at->format('h:i A d-m-Y') }}</small></h3>
                                                     <p>{{ Str::limit($contact->message, 50) }}</p>
                                                 </div>
                                             </div>

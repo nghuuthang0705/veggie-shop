@@ -16,15 +16,16 @@
                     </div>
                 </li>
 
+                {{-- Contacts --}}
                 <li class="nav-item dropdown open">
                     <a href="javascript:;" class="dropdown-toggle info-number" id="navbarDropdown1" data-toggle="dropdown" aria-expanded="false">
                         <i class="fa fa-envelope-o"></i>
                         <span class="badge bg-green">{{ $messages->count() }}</span>
                     </a>
-                    <ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1">
+                    <ul class="dropdown-menu list-unstyled msg_list" role="menu">
                         @for ($i = 0; $i < min(3, $messages->count()); $i++)
                             <li class="nav-item">
-                                <a class="dropdown-item">
+                                <a class="dropdown-item" href="{{ route('admin.contacts.index') }}">
                                     <span class="image"><img src="{{ asset('assets/admin/images/user.png') }}" alt="Profile Image" /></span>
                                     <span>
                                         <span>{{ $messages[$i]->full_name }}</span>
@@ -47,15 +48,31 @@
                     </ul>
                 </li>
 
+                {{-- Notifications --}}
                 <li class="nav-item dropdown open" style="margin-right: 10px">
                     <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
                         <i class="fa fa-bell-o"></i>
-                        <span class="badge bg-green">12</span>
+                        <span class="badge bg-green">{{ $notifications->count() }}</span>
                     </a>
-                    <ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1">
+                    <ul class="dropdown-menu list-unstyled msg_list" role="menu">
+                        @for ($i = 0; $i < min(3, $notifications->count()); $i++)
+                            <li class="nav-item">
+                                <a class="dropdown-item" href="{{ route('admin.notifications.index') }}">
+                                    <span class="image"><img src="{{ asset('assets/admin/images/bell_notifications.png') }}" alt="Profile Image"
+                                            style="width: 30px; height: 30px;" /></span>
+                                    <span>
+                                        <span>{{ $notifications[$i]->title }}</span>
+                                        <span class="time">{{ $notifications[$i]->created_at->diffForHumans() }}</span>
+                                    </span>
+                                    <span class="message custom-message-top">
+                                        {{ $notifications[$i]->message }}
+                                    </span>
+                                </a>
+                            </li>
+                        @endfor
                         <li class="nav-item">
                             <div class="text-center">
-                                <a class="dropdown-item" href="{{ route('admin.contacts.index') }}">
+                                <a class="dropdown-item" href="{{ route('admin.notifications.index') }}">
                                     <strong>Xem tất cả thông báo</strong>
                                     <i class="fa fa-angle-right"></i>
                                 </a>
