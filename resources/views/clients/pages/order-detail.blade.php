@@ -48,7 +48,7 @@
                     @foreach ($order->orderItems as $item)
                         <tr>
                             <td>
-                                <img src="{{ asset('storage/' . $item->product->image_url) }}" width="50">
+                                <img src="{{ $item->product->image_url }}" width="50">
                             </td>
                             <td>{{ $item->product->name }}</td>
                             <td>{{ number_format($item->price, 0, ',', '.') }} đ</td>
@@ -69,6 +69,13 @@
                 <form action="{{ route('order.cancel', $order->id) }}" method="POST" onsubmit="return confirm('Bạn có chắc muốn hủy dơn hàng này?');">
                     @csrf
                     <button type="submit" class="btn btn-danger btn-sm mt-3">Hủy đơn hàng</button>
+                </form>
+            @endif
+
+            @if ($order->status == 'processing')
+                <form action="{{ route('order.received', $order->id) }}" method="POST" onsubmit="return confirm('Bạn đã nhận được hàng?');">
+                    @csrf
+                    <button type="submit" class="btn btn-primary btn-sm mt-3">Đã nhận được hàng</button>
                 </form>
             @endif
 

@@ -73,6 +73,7 @@ Route::prefix('/')->group(function() {
     Route::post('/checkout/paypal', [CheckoutController::class, 'placeOrderPayPal'])->name('checkout.placeOrderPayPal');
 
     Route::get('/order/{id}', [OrderController::class, 'showOrder'])->name('order.show');
+    Route::post('/order/{id}/received', [OrderController::class, 'received'])->name('order.received');
     Route::post('/order/{id}/cancel', [OrderController::class, 'cancel'])->name('order.cancel');
 
     Route::post('/review', [ReviewController::class, 'createReview']);
