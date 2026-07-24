@@ -21,4 +21,11 @@ class NotificationController extends Controller
 
         return view('admin.pages.notifications', compact('notifications'));
     }
+
+    public function update(Request $request)
+    {
+        Notification::where('id', $request->id)->update(['is_read' => 1]);
+
+        return response()->json(['status' => true]);
+    }
 }

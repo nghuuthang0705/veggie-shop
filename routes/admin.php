@@ -30,6 +30,7 @@ Route::prefix('admin')->group(function() {
     Route::post('/profile/update', [AccountController::class, 'updateProfile']);
     
     Route::get('/notifications', [NotificationController::class, 'index'])->name('admin.notifications.index');
+    Route::post('/notification/update', [NotificationController::class, 'update']);
 
     Route::middleware(['permission:manage_users'])->group(function() {
         Route::get('/users', [UsersController::class, 'index'])->name('admin.users.index');

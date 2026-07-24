@@ -41,10 +41,11 @@
                                                                 <img src="{{ asset('assets/admin/images/bell_notifications.png') }}" alt="">
                                                             </div>
                                                             <div class="message_wrapper" style="min-width: 400px;">
-                                                                <a href="{{ '../admin' . $notification->link }}">
+                                                                <a href="{{ '../admin' . $notification->link }}" class="notification-item"
+                                                                    data-id="{{ $notification->id }}">
                                                                     <h4 class="heading">{{ $notification->title }}</h4>
                                                                 </a>
-                                                                <blockquote class="message">{{ Str::limit($notification->message, 50) }}</blockquote>
+                                                                <blockquote class="message">{{ Str::limit($notification->message, 100) }}</blockquote>
                                                                 <br />
                                                             </div>
                                                             <div class="message_date">

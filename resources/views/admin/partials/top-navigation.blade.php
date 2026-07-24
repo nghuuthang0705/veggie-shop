@@ -25,10 +25,10 @@
                     <ul class="dropdown-menu list-unstyled msg_list" role="menu">
                         @for ($i = 0; $i < min(3, $messages->count()); $i++)
                             <li class="nav-item">
-                                <a class="dropdown-item" href="{{ route('admin.contacts.index') }}">
+                                <a class="dropdown-item">
                                     <span class="image"><img src="{{ asset('assets/admin/images/user.png') }}" alt="Profile Image" /></span>
                                     <span>
-                                        <span>{{ $messages[$i]->full_name }}</span>
+                                        <a href="{{ route('admin.contacts.index') }}"><span>{{ $messages[$i]->full_name }}</span></a>
                                         <span class="time">{{ $messages[$i]->created_at->diffForHumans() }}</span>
                                     </span>
                                     <span class="message custom-message-top">
@@ -57,11 +57,11 @@
                     <ul class="dropdown-menu list-unstyled msg_list" role="menu">
                         @for ($i = 0; $i < min(3, $notifications->count()); $i++)
                             <li class="nav-item">
-                                <a class="dropdown-item" href="{{ route('admin.notifications.index') }}">
+                                <a class="dropdown-item">
                                     <span class="image"><img src="{{ asset('assets/admin/images/bell_notifications.png') }}" alt="Profile Image"
                                             style="width: 30px; height: 30px;" /></span>
                                     <span>
-                                        <span>{{ $notifications[$i]->title }}</span>
+                                        <a href="{{ route('admin.notifications.index') }}"><span>{{ $notifications[$i]->title }}</span></a>
                                         <span class="time">{{ $notifications[$i]->created_at->diffForHumans() }}</span>
                                     </span>
                                     <span class="message custom-message-top">

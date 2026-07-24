@@ -799,4 +799,31 @@ $(document).ready(function () {
             },
         });
     }
+
+    /****************************************
+     ******* MANAGEMENT NOTIFICATIONS *******
+     ****************************************/
+
+    $(document).on("click", ".notification-item", function (e) {
+        let noti_id = $(this).data("id");
+
+        $.ajaxSetup({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+        });
+
+        $.ajax({
+            url: "notification/update",
+            type: "POST",
+            dataType: "json",
+            data: { id: noti_id },
+
+            success: function (response) {},
+
+            error: function (xhr, status, error) {
+                alert("Đã xảy ra lỗi với thông báo. Vui lòng thử lại.");
+            },
+        });
+    });
 });
